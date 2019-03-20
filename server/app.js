@@ -48,7 +48,9 @@ app.use(session({
 // require('./passport')(app)
 
 //* routes import and middlewares
-app.use('/api', require('./routes/index'))
+app.use('/api/users', require('./routes/users.router'))
+app.use('/api/profile', require('./routes/profile.router'))
+app.use('/api/posts', require('./routes/posts.router'))
 
 
 // For any routes that starts with "/api", catch 404 and forward to error handler
