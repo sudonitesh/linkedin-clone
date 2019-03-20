@@ -10,6 +10,7 @@ const logger = require('morgan')
 const nocache = require('nocache')
 const session = require("express-session")
 const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
 
 require('./configs/database')
 
@@ -37,6 +38,8 @@ app.use(cookieParser())
 // Example: http://localhost:5000/favicon.ico => Display "~/client/build/favicon.ico"
 app.use(express.static(path.join(__dirname, '../client/build')))
 
+app.use(passport.initialize())
+// require('./configs/passport')(passport);
 
 // Enable authentication using session + passport
 app.use(session({
@@ -45,7 +48,6 @@ app.use(session({
   saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
-// require('./passport')(app)
 
 //* routes import and middlewares
 app.use('/api/users', require('./routes/users.router'))
