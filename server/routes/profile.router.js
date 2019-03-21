@@ -75,7 +75,7 @@ router.post('/', passport.authenticate('jwt', {
   const facebook = req.body.facebook;
   const linkedin = req.body.linkedin;
   const instagram = req.body.instagram;
-
+  profileFields.user = user;
   if (handle) profileFields.handle = handle
   if (company) profileFields.company = company
   if (website) profileFields.website = website
