@@ -16,7 +16,7 @@ router.get('/test', (req, res) => {
   res.send('users api')
 });
 
-// @route GET api/users/register
+// @route POST api/users/register
 // @desc Register user
 // @access Public
 router.post('/register', (req, res, next) => {
@@ -74,7 +74,7 @@ router.post('/register', (req, res, next) => {
 
 });
 
-// @route GET api/users/login
+// @route POST api/users/login
 // @desc user login -> returns JWT
 // @access Public
 router.post('/login', (req, res) => {
