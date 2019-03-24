@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
+import jwt_decode from "jwt-decode";
 
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { clearCurrentProfile } from './actions/profileActions';
 import store from "./store";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -10,6 +14,22 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 
 import "./App.css";
+
+if (localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken); //set ath token header auth
+  const decoded = jwt_decode(localStorage.jwtToken); //decode token and get user info and token exp
+  store.dispatch(setCurrentUser(decoded)); //set user and isAuthenticated
+  // Check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // TODO: Clear current Profile
+
+    // Redirect to login
+    window.location.href = "/login";
+  }
+}
 
 class App extends Component {
   render() {

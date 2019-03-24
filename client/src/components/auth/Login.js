@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
-import classnames from 'classnames'
+import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -10,36 +14,41 @@ export default class Login extends Component {
       password: "",
       errors: {}
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+
   }
 
-  onChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
   }
-  onSubmit(e) {
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  onSubmit = e => {
     e.preventDefault();
-    const user = {
+
+    const userData = {
       email: this.state.email,
       password: this.state.password
     };
-    axios
-      .post("/api/users/login", user)
-      .then(res => {
-        console.log("[+] ", res.data);
-      })
-      .catch(err => {
-        console.log(err.response.data);
-        this.setState({
-          errors: err.response.data
-        })
-      });
+
+    this.props.loginUser(userData);
   }
 
   render() {
-    const {errors} = this.state;
+    const { errors } = this.state;
 
     return (
       <div className="login">
@@ -50,41 +59,27 @@ export default class Login extends Component {
               <p className="lead text-center">
                 Sign in to your DevConnector account
               </p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="email"
-                    className={classnames('form-control, form-control-lg', {
-                      'is-invalid': errors.email
-                    })}
-                    placeholder="Email Address"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                  />
-                  {
-                    errors.email && (
-                      <span className="alert alert-danger"> {errors.email} </span>
-                    )
-                  }
-                </div>
-                <div className="form-group">
-                  <input
-                    type="password"
-                    className={classnames('form-control, form-control-lg', {
-                      'is-invalid': errors.password
-                    })}
-                    placeholder="Password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                  {
-                    errors.password && (
-                      <span className="alert alert-danger"> {errors.password} </span>
-                    )
-                  }
-                </div>
+              <form onSubmit={this.onSubmit}>
+                <TextFieldGroup
+                  placeholder="Email Address"
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={errors.email}
+                />
+                {
+                  errors.email && (<span className="alert alert-dangwe"> {errors.email}</span>)
+                }
+                <TextFieldGroup
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
+
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
@@ -94,3 +89,17 @@ export default class Login extends Component {
     );
   }
 }
+
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);
