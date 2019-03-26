@@ -12,7 +12,7 @@ module.exports = function validateProfileInput(data) {
             min: 2,
             max: 40
         })) {
-        errors.handle = 'Handle needs to between 2 and 4 characters';
+        errors.handle = 'Handle needs to between 2 and 40 characters';
     }
 
     if (Validator.isEmpty(data.handle)) {

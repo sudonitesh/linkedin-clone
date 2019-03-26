@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 100px !important;
+}
+
 img {
   width: 100%;
 }
@@ -36,4 +40,11 @@ img {
 
 .form-control::placeholder {
   color: #bbb !important;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
