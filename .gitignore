@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-
+.vscode
 # Environment Variables should NEVER be published
 .env
 .env.local
