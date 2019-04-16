@@ -10,6 +10,6 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION-false cd client && npm install && npm run build"
   },
   "engines": {
-    "node": "10.15.3"
+    "node": "8.9.4"
   }
 }
