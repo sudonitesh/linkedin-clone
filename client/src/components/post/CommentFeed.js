@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import CommentItem from "./CommentItem";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import CommentItem from './CommentItem';
 
 class CommentFeed extends Component {
   render() {

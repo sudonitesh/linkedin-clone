@@ -3,11 +3,11 @@ import axios from "axios";
 import {
   ADD_POST,
   GET_ERRORS,
+  CLEAR_ERRORS,
   GET_POSTS,
   GET_POST,
   POST_LOADING,
-  DELETE_POST,
-  CLEAR_ERRORS
+  DELETE_POST
 } from "./types";
 
 // Add Post
@@ -147,6 +147,7 @@ export const deleteComment = (postId, commentId) => dispatch => {
       })
     );
 };
+
 // Set loading state
 export const setPostLoading = () => {
   return {

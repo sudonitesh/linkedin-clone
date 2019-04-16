@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import classnames from "classnames";
-import { Link } from "react-router-dom";
-
-import { deletePost, addLike, removeLike } from "../../actions/postActions";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import classnames from 'classnames';
+import { Link } from 'react-router-dom';
+import { deletePost, addLike, removeLike } from '../../actions/postActions';
 
 class PostItem extends Component {
   onDeleteClick(id) {
-    console.log(id);
     this.props.deletePost(id);
   }
 
@@ -48,7 +46,6 @@ class PostItem extends Component {
           </div>
           <div className="col-md-10">
             <p className="lead">{post.text}</p>
-
             {showActions ? (
               <span>
                 <button
@@ -57,8 +54,8 @@ class PostItem extends Component {
                   className="btn btn-light mr-1"
                 >
                   <i
-                    className={classnames("fas fa-thumbs-up", {
-                      "text-info": this.findUserLike(post.likes)
+                    className={classnames('fas fa-thumbs-up', {
+                      'text-info': this.findUserLike(post.likes)
                     })}
                   />
                   <span className="badge badge-light">{post.likes.length}</span>
@@ -91,6 +88,10 @@ class PostItem extends Component {
   }
 }
 
+PostItem.defaultProps = {
+  showActions: true
+};
+
 PostItem.propTypes = {
   deletePost: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
@@ -103,7 +104,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { deletePost, addLike, removeLike }
-)(PostItem);
+export default connect(mapStateToProps, { deletePost, addLike, removeLike })(
+  PostItem
+);

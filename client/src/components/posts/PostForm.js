@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import { addPost } from "../../actions/postActions";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import { addPost } from '../../actions/postActions';
 
 class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
+      text: '',
       errors: {}
     };
 
@@ -34,7 +34,7 @@ class PostForm extends Component {
     };
 
     this.props.addPost(newPost);
-    this.setState({ text: "" });
+    this.setState({ text: '' });
   }
 
   onChange(e) {
@@ -47,7 +47,7 @@ class PostForm extends Component {
     return (
       <div className="post-form mb-3">
         <div className="card card-info">
-          <div className="card-header bg-info text-white">Say Something...</div>
+          <div className="card-header bg-info text-white">Say Somthing...</div>
           <div className="card-body">
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
@@ -81,7 +81,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { addPost }
-)(PostForm);
+export default connect(mapStateToProps, { addPost })(PostForm);

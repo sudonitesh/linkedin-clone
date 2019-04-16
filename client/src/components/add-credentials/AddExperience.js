@@ -26,9 +26,15 @@ class AddExperience extends Component {
     this.onCheck = this.onCheck.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onSubmit(e) {
     e.preventDefault();
-    console.log("submit");
+
     const expData = {
       company: this.state.company,
       title: this.state.title,
@@ -41,11 +47,7 @@ class AddExperience extends Component {
 
     this.props.addExperience(expData, this.props.history);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -65,7 +67,7 @@ class AddExperience extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to="/dashboard" className="btn btn-light">
+              <Link to="/dashboard" className="btn btn-dark">
                 Go Back
               </Link>
               <h1 className="display-4 text-center">Add Experience</h1>
@@ -137,7 +139,7 @@ class AddExperience extends Component {
                 <input
                   type="submit"
                   value="Submit"
-                  className="btn btn-info btn-block mt-4"
+                  className="btn btn-info btn-dark mt-4"
                 />
               </form>
             </div>
@@ -149,9 +151,9 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
+  addExperience: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  addExperience: PropTypes.func.isRequired
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
