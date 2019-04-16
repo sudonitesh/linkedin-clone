@@ -19,5 +19,4 @@ yarn-error.log*
 client-old
 server-old
 
-README.md
 *.log
